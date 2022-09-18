@@ -34,6 +34,7 @@ export class PairService implements OnApplicationBootstrap {
       rightToken: rightToken.id,
       address: pair,
       scale: rightToken.decimals - leftToken.decimals,
+      tokens: [leftToken, rightToken],
     });
   }
 

@@ -33,7 +33,7 @@ export class Pair {
   @Column('integer')
   scale: number;
 
-  @ManyToMany(() => Token, (token) => token.pairs)
+  @ManyToMany(() => Token, (token) => token.pairs, { eager: true })
   @JoinTable()
   tokens: Token[];
 
