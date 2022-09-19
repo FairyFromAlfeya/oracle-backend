@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PriceService } from '../manager/price.service';
-import { PaginationDto } from '../service/dto/pagination.dto';
+import { PricePaginationDto } from '../service/dto/price-pagination.dto';
 import { Price } from '../manager/entities/price.entity';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class PriceServiceProxy {
 
   listPrices(
     pair: string,
-    pagination: PaginationDto,
+    pagination: PricePaginationDto,
   ): Promise<[Price[], number]> {
     return this.priceService.listPrices(pair, pagination);
   }

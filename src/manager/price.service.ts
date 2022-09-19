@@ -1,10 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Between } from 'typeorm';
 import { Price } from './entities/price.entity';
 import { OnEvent } from '@nestjs/event-emitter';
 import { PairSyncEvent } from '../events/pair-sync.event';
-import { PaginationDto } from '../service/dto/pagination.dto';
+import { PricePaginationDto } from '../service/dto/price-pagination.dto';
 import { reservesToPrice } from '../utils';
 
 @Injectable()
@@ -18,10 +18,10 @@ export class PriceService {
 
   listPrices(
     pair: string,
-    pagination: PaginationDto,
+    pagination: PricePaginationDto,
   ): Promise<[Price[], number]> {
     return this.priceRepository.findAndCount({
-      where: { pair },
+      where: { pair, createdAt: Between(pagination.from, pagination.to) },
       skip: pagination.size * pagination.page,
       take: pagination.size,
       order: {

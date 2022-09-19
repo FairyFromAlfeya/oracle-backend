@@ -1,7 +1,6 @@
 import { PaginationDto } from './pagination.dto';
 
-export interface TwapPaginationDto extends PaginationDto {
-  interval: number;
+export interface PricePaginationDto extends PaginationDto {
   from: string;
   to: string;
 }

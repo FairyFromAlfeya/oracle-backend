@@ -1,6 +1,6 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { PriceServiceProxy } from '../proxy/price-service.proxy';
-import { PaginationDto } from './dto/pagination.dto';
+import { PricePaginationDto } from './dto/price-pagination.dto';
 import { Price } from '../manager/entities/price.entity';
 
 @Controller('prices')
@@ -10,7 +10,7 @@ export class PriceController {
   @Get(':pair')
   listPrices(
     @Param('pair') pair: string,
-    @Query() query: PaginationDto,
+    @Query() query: PricePaginationDto,
   ): Promise<[Price[], number]> {
     return this.priceServiceProxy.listPrices(pair, query);
   }

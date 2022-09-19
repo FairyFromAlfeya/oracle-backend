@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Between } from 'typeorm';
 import { OnEvent } from '@nestjs/event-emitter';
 import { PairSyncEvent } from '../events/pair-sync.event';
 import { Twap } from './entities/twap.entity';
@@ -25,7 +25,11 @@ export class TwapService {
     pagination: TwapPaginationDto,
   ): Promise<[Twap[], number]> {
     return this.twapRepository.findAndCount({
-      where: { pair, interval: pagination.interval },
+      where: {
+        pair,
+        interval: pagination.interval,
+        createdAt: Between(pagination.from, pagination.to),
+      },
       skip: pagination.size * pagination.page,
       take: pagination.size,
       order: {
