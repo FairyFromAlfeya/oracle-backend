@@ -3,9 +3,24 @@ import { BigNumber } from 'bignumber.js';
 const FIXED_POINT_128_MULTIPLIER = new BigNumber(2).pow(128);
 
 export const dateColumnTransformer = {
-  from: (value: string | null) =>
-    value ? new Date(value).toISOString() : value,
-  to: (value: string | null) => (value ? new Date(value).toISOString() : value),
+  from: (value: any) => {
+    const type = typeof value;
+
+    if (type === 'string' || type === 'number' || value instanceof Date) {
+      return new Date(value).toISOString();
+    } else {
+      return value;
+    }
+  },
+  to: (value: any) => {
+    const type = typeof value;
+
+    if (type === 'string' || type === 'number' || value instanceof Date) {
+      return new Date(value).toISOString();
+    } else {
+      return value;
+    }
+  },
 };
 
 export const cumulativeToPrice = (cumulative: string, scale: number): string =>
